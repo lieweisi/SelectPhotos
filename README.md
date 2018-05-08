@@ -1,6 +1,6 @@
 # SelectPhotos
 1.图片选择控件，可绑定在activity与fragment上，使用简单方便。
-##效果预览
+<br>##效果预览
 ![image](https://github.com/lieweisi/SelectPhotos/blob/master/selectPhoto.gif)
 
 <br>`gif图片由于录屏软件没搞好，看起会有点慢，实际运行不存在，可以直接clone项目运行查看效果。`
