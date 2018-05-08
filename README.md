@@ -6,7 +6,6 @@
 <br>`gif图片由于录屏软件没搞好，看起会有点慢，实际运行不存在，可以直接clone项目运行查看效果。`
 <br>##演示demo下载
 <br>[演示apk](https://github.com/lieweisi/SelectPhotos/blob/master/selectPhoto.apk)
-###v1.1版本加入了图片压缩
 ### 引入方式：
 
     1.在项目bulid.gradle中添加
@@ -42,6 +41,7 @@
         }
     }
 备注:每个人的需求都不相同，此项目只完成基本功能，如需要定制可下载项目在源码基础上进行修改，后续还会陆续加入一些常见操作。
+~v1.1版本加入了图片压缩~
 
 ## License
 ```text
