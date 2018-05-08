@@ -4,7 +4,7 @@
 ![image](https://github.com/lieweisi/SelectPhotos/blob/master/selectPhoto.gif)
 
 <br>`gif图片由于录屏软件没搞好，看起会有点慢，实际运行不存在，可以直接clone项目运行查看效果。`
-##演示demo下载
+<br>##演示demo下载
 [演示apk](https://github.com/lieweisi/SelectPhotos/blob/master/selectPhoto.apk)
 ### 引入方式：
 
