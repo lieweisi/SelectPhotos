@@ -271,7 +271,7 @@ public class SelectPhotoView extends LinearLayout implements BaseRecyclerViewAda
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                    templist.add(photoBean);
+                    templist.add(new PhotoBean(s));
                     attachments.add(photoBean);
                 }
                 adapter.addData(mList.size() - 1, templist);
