@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="selectRecycler">
+        <attr name="spanCount" format="integer" /><!--显示列数-->
+        <attr name="columnCount" format="integer" /><!--显示列数-->
+        <attr name="uploadImage" format="reference" /><!--上传默认图片-->
+        <attr name="albumTitle" format="string|reference" /><!--上传默认图片-->
+        <attr name="camera" format="boolean" /><!--上传默认图片-->
+    </declare-styleable>
+</resources>
