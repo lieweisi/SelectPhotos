@@ -7,13 +7,14 @@
 ##演示demo下载
 [演示apk](https://github.com/lieweisi/SelectPhotos/blob/master/selectPhoto.apk)
 ### 引入方式：
-1.在项目bulid.gradle中添加
+
+    1.在项目bulid.gradle中添加
     allprojects {
     repositories {
         jcenter()
         maven { url 'https://jitpack.io' }
     }
-2.在app的bulid.gradle中添加引用  
+    2.在app的bulid.gradle中添加引用  
     compile 'com.github.lieweisi:SelectPhotos:v1.0'
     
 ### 具体使用步骤：
