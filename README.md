@@ -41,3 +41,20 @@
         }
     }
 备注:每个人的需求都不相同，此项目只完成基本功能，如需要定制可下载项目在源码基础上进行修改，后续还会陆续加入一些常见操作。
+
+## License
+```text
+Copyright 2018 Li Wei
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+   http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+```
