@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.res.TypedArray;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
+import android.os.Environment;
 import android.support.annotation.AttrRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -26,22 +27,25 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.liluo.library.base.BaseRecyclerViewAdapter;
 import com.liluo.library.base.BaseViewHolder;
-import com.liluo.library.util.CommUtil;
-import com.liluo.library.util.LogUtils;
-import com.liluo.library.util.SizeUtils;
+import com.liluo.library.util.PixelUtils;
+import com.liluo.library.util.ScreenUtils;
 import com.yanzhenjie.album.Album;
 import com.yanzhenjie.album.AlbumWrapper;
 import com.yanzhenjie.album.GalleryWrapper;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import id.zelory.compressor.Compressor;
 
 import static android.animation.ValueAnimator.REVERSE;
 import static android.app.Activity.RESULT_OK;
 import static android.view.animation.Animation.INFINITE;
 
 /**
- * Created by liuhang on 2017/11/6.
+ * Created by liluo on 2018/5/6.
  */
 public class SelectPhotoView extends LinearLayout implements BaseRecyclerViewAdapter.OnItemClickListener, BaseRecyclerViewAdapter.OnItemChildClickListener, BaseRecyclerViewAdapter.OnItemLongClickListener {
     RecyclerView mRecyclerView;
@@ -51,7 +55,7 @@ public class SelectPhotoView extends LinearLayout implements BaseRecyclerViewAda
     int columnCount = 3;
     int maxPhotos   = 6;//最大图片选择数
     Drawable uploadDrawable;//
-    String  albumTitle = "图库";//图库taitle
+    String  albumTitle = "图库";//图库
     Boolean hasCamear  = true;
     Context         mContext;
     List<PhotoBean> mList;
@@ -166,7 +170,6 @@ public class SelectPhotoView extends LinearLayout implements BaseRecyclerViewAda
     public void onItemChildClick(BaseRecyclerViewAdapter adapter, View view, int position) {
         //删除图片 TODO
         attachments.remove(position);
-        LogUtils.i(mList.size());
         adapter.removeItem(position);
     }
 
@@ -194,7 +197,7 @@ public class SelectPhotoView extends LinearLayout implements BaseRecyclerViewAda
             ImageView view = holder.getView(R.id.iv_img);
             View cover = holder.getView(R.id.tv_cover);
             ViewGroup.LayoutParams lp = view.getLayoutParams();
-            int width = (CommUtil.getScreenWidth(mContext) - (spanCount + 1) * SizeUtils.dp2px(10)) / spanCount;
+            int width = (ScreenUtils.getScreenWidth(mContext) - (spanCount + 1) * PixelUtils.dp2px(10, mContext)) / spanCount;
             lp.width = width;
             lp.height = width;
             view.setLayoutParams(lp);
@@ -239,7 +242,14 @@ public class SelectPhotoView extends LinearLayout implements BaseRecyclerViewAda
         translateAnimation.setRepeatCount(INFINITE);
         return translateAnimation;
     }
-
+    private String getPath() {
+        String path = Environment.getExternalStorageDirectory() + "/Luban/image/";
+        File file = new File(path);
+        if (file.mkdirs()) {
+            return path;
+        }
+        return path;
+    }
     /**
      * 选择后返回
      * @param requestCode
@@ -251,15 +261,23 @@ public class SelectPhotoView extends LinearLayout implements BaseRecyclerViewAda
             if (requestCode == REQUEST_CODE) {
                 ArrayList<String> pathList = Album.parseResult(data);
                 List<PhotoBean> templist = new ArrayList<>();
+                PhotoBean photoBean=new PhotoBean();
                 for (String s : pathList) {
-                    templist.add(new PhotoBean(s));
-                    attachments.add(new PhotoBean(s));
+                    photoBean.setPath(s);
+                    File compressedImageFile = null;
+                    try {
+                        compressedImageFile = new Compressor(mContext).compressToFile(new File(s));
+                        photoBean.setCompressPath(compressedImageFile.getAbsolutePath());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    templist.add(photoBean);
+                    attachments.add(photoBean);
                 }
                 adapter.addData(mList.size() - 1, templist);
             }
         }
     }
-
     List<PhotoBean> attachments = new ArrayList<>();
 
     public void setAttachments(List<PhotoBean> list) {
@@ -289,10 +307,23 @@ public class SelectPhotoView extends LinearLayout implements BaseRecyclerViewAda
 
     public class PhotoBean {
         String path;
+
+        public String getCompressPath() {
+            return compressPath;
+        }
+
+        public void setCompressPath(String compressPath) {
+            this.compressPath = compressPath;
+        }
+
+        String compressPath;
         int    type;// 0 上传中 1 上传成功
 
         public PhotoBean(String path) {
             this.path = path;
+        }
+
+        public PhotoBean() {
         }
 
         public String getPath() {
